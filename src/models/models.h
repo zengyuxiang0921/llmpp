@@ -424,6 +424,17 @@ struct llama_model_mellum : public llama_model_base {
     std::unique_ptr<llm_graph_context> build_arch_graph(const llm_graph_params & params) const override;
 };
 
+
+//
+// llmpp -- alias for llama. Reuses all llama tensor layout and graph building.
+// Converted models (via convert_gguf_to_llmpp.py) use this architecture.
+//
+struct llama_model_llmpp : public llama_model_llama {
+    llama_model_llmpp(const struct llama_model_params & params) : llama_model_llama(params) {}
+    // inherit load_arch_hparams, load_arch_tensors, build_arch_graph from llama_model_llama
+};
+
+
 struct llama_model_qwen : public llama_model_base {
     llama_model_qwen(const struct llama_model_params & params) : llama_model_base(params) {}
     void load_arch_hparams(llama_model_loader & ml) override;
